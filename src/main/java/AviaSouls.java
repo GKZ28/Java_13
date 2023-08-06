@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class AviaSouls {
     private Ticket[] tickets = new Ticket[0];
 
@@ -44,6 +46,7 @@ public class AviaSouls {
                 }
             }
         }
+        Arrays.sort(result);
         return result;
     }
 }
