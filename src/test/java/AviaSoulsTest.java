@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 class TicketTest {
 
@@ -31,7 +32,7 @@ class TicketTest {
 
     @Test
 
-    public void ticketSearchTest () {
+    public void ticketSearchTest() {
 
         Ticket ticket1 = new Ticket("Москва", "Казань", 20_000, 12_00, 14_00);
         Ticket ticket2 = new Ticket("Казань", "Саратов", 15_000, 15_00, 16_00);
@@ -54,14 +55,14 @@ class TicketTest {
 
     @Test
 
-    public void ticketTimeComparatorTest(){
+    public void ticketTimeComparatorTest() {
 
         Ticket ticket1 = new Ticket("Москва", "Казань", 20_000, 12_00, 14_00);
         Ticket ticket2 = new Ticket("Казань", "Саратов", 15_000, 15_00, 16_00);
         Ticket ticket3 = new Ticket("Саратов", "Москва", 25_000, 11_00, 14_00);
 
 
-        Ticket[] tickets = { ticket1, ticket2, ticket3};
+        Ticket[] tickets = {ticket1, ticket2, ticket3};
 
         TicketTimeComparator timeComparator = new TicketTimeComparator();
         Arrays.sort(tickets, timeComparator);
@@ -74,5 +75,30 @@ class TicketTest {
         }
 
 
+    }
+
+    @Test
+
+    public void logicComparatorTest() {
+
+        Ticket ticket1 = new Ticket("Москва", "Казань", 20_000, 12_00, 14_00);
+        Ticket ticket2 = new Ticket("Москва", "Казань", 15_000, 15_00, 16_00);
+        Ticket ticket3 = new Ticket("Москва", "Казань", 25_000, 11_00, 19_00);
+
+
+        AviaSouls manager = new AviaSouls();
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+
+        Comparator<Ticket> ticketComparator = new TicketTimeComparator();
+        Ticket[] searchResult = manager.searchAndSortBy("Москва", "Казань", ticketComparator);
+
+        System.out.println();
+        System.out.println("Результат поиска и сортировки билетов по продолжительности полета:");
+        for (Ticket ticket : searchResult) {
+            int duration = ticket.getTimeTo() - ticket.getTimeFrom();
+            System.out.println(ticket.getFrom() + " -> " + ticket.getTo() + ", Продолжительность полета: " + duration + " мин");
+        }
     }
 }
