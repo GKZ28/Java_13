@@ -1,6 +1,7 @@
+import javax.print.attribute.standard.MediaSize;
 import java.util.Objects;
 
-public class Ticket {
+public class Ticket implements Comparable <Ticket>{
     private String from; // аэропорт откуда
     private String to; // аэропорт куда
     private int price; // цена
@@ -35,6 +36,9 @@ public class Ticket {
         return timeTo;
     }
 
+    public int compareTo (Ticket otherTicket) {
+        return Integer.compare(this.price, otherTicket.price );
+    }
 
     // Вспомогательные методы для корректной работы equals
     @Override
@@ -49,4 +53,6 @@ public class Ticket {
     public int hashCode() {
         return Objects.hash(from, to, price, timeFrom, timeTo);
     }
+
+
 }
