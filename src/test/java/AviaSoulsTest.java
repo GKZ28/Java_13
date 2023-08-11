@@ -5,6 +5,7 @@ import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TicketTest {
 
@@ -32,8 +33,8 @@ class TicketTest {
 
         Ticket[] searchResult = manager.search("Казань", "Саратов");
 
-        assertEquals("Казань", searchResult[0].getFrom());
-        assertEquals("Саратов", searchResult[0].getTo());
+        assertArrayEquals(new Ticket[]{ticket2}, searchResult);
+
     }
 
     @Test
@@ -47,10 +48,7 @@ class TicketTest {
         TicketTimeComparator timeComparator = new TicketTimeComparator();
         Arrays.sort(tickets, timeComparator);
 
-        assertEquals("Казань", tickets[0].getFrom());
-        assertEquals("Саратов", tickets[0].getTo());
-        assertEquals("Саратов", tickets[2].getFrom());
-        assertEquals("Москва", tickets[2].getTo());
+        assertArrayEquals(new Ticket[]{ticket2, ticket1, ticket3}, tickets);
     }
 
     @Test
@@ -67,9 +65,6 @@ class TicketTest {
         Comparator<Ticket> ticketComparator = new TicketTimeComparator();
         Ticket[] searchResult = manager.searchAndSortBy("Москва", "Казань", ticketComparator);
 
-        assertEquals("Москва", searchResult[0].getFrom());
-        assertEquals("Казань", searchResult[0].getTo());
-        assertEquals("Москва", searchResult[2].getFrom());
-        assertEquals("Казань", searchResult[2].getTo());
+        assertArrayEquals(new Ticket[]{ticket2, ticket1, ticket3}, searchResult);
     }
 }
